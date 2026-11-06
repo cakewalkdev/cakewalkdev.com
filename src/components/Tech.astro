@@ -1,0 +1,38 @@
+---
+import Em from './Em.astro'
+import Laravel from '../icons/Laravel.svg'
+import Statamic from '../icons/Statamic.svg'
+import AstroIcon from '../icons/Astro.svg'
+import Tailwind from '../icons/Tailwind.svg'
+import Alpine from '../icons/Alpine.svg'
+
+const tools = [
+  { name: 'Laravel', url: 'https://laravel.com/', Icon: Laravel },
+  { name: 'Statamic', url: 'https://statamic.com/', Icon: Statamic },
+  { name: 'Astro', url: 'https://astro.build/', Icon: AstroIcon },
+  { name: 'Tailwind', url: 'https://tailwindcss.com/', Icon: Tailwind },
+  { name: 'Alpine', url: 'https://alpinejs.dev/', Icon: Alpine },
+]
+---
+
+<section class="bg-linear-to-b from-white to-gray-100 text-navy spacer-py">
+  <div class="container">
+    <div class="text-center text-balance">
+      <h2 class="h1">What's going on behind-the-scenes?</h2>
+      <p class="h4 mt-4">We get it! You like the <Em>tech talk</Em>.</p>
+    </div>
+
+    <div class="rich-text mt-12 mb-16 text-balance sm:text-center max-w-3xl mx-auto">
+      <p>We love using tools that are simple, flexible, reliable, and performant. And while we could stop there, we also choose tools based on their thriving and vibrant community! So much so that we don't just use Laravel, Statamic, Tailwind, and Alpine &mdash; <strong>we contribute to them</strong>.</p>
+    </div>
+
+    <div class="flex flex-wrap max-w-screen-sm mx-auto justify-center gap-x-10 gap-y-8 sm:gap-x-16">
+      {tools.map(({ name, url, Icon }) => (
+        <a target="_blank" href={url} class="group flex flex-col items-center gap-2.5">
+          <Icon class="size-12 text-navy group-hover:-translate-y-2 transition-transform" />
+          <p class="text-xs text-gray-500 font-mono text-balance">{name}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

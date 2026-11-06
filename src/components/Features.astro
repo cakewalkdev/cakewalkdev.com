@@ -1,0 +1,68 @@
+---
+import Em from './Em.astro'
+
+const features = [
+  {
+    icon: '📝',
+    title: 'CMS-driven Sites',
+    text: 'Update <strong>your own content</strong> anytime with an easy-to-use CMS.',
+  },
+  {
+    icon: '📨',
+    title: 'Static Sites',
+    text: "Rather <strong>email us your changes</strong>? We'll make them for you.",
+  },
+  {
+    icon: '🧘',
+    title: 'Simple Prices',
+    text: 'You get a <strong>fixed price up front</strong>, so you always know the cost.',
+  },
+  {
+    icon: '🛠️',
+    title: 'Custom Integrations',
+    text: "Need a calendar, job board, or directory? <strong>We've likely built one.</strong>",
+  },
+  {
+    icon: '🏗️',
+    title: 'Hosting and Maintenance',
+    text: 'We handle <strong>hosting, updates, and upkeep</strong> after launch.',
+  },
+  {
+    icon: '🤝',
+    title: 'Human-focused',
+    text: 'Our emails and contracts are written in <strong>plain English</strong>.',
+  },
+]
+---
+
+<section class="bg-linear-to-b from-black-navy to-navy spacer-py">
+  <div class="container">
+    <div class="text-balance text-white text-center">
+      <h2 class="h1">What does Cakewalk offer?</h2>
+      <p class="h4 mt-5">
+        Best-in-class websites in a <Em>simple</Em> price structure.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 md:mt-16">
+      {features.map((feature, index) => (
+        <div
+          class:list={[
+            'bg-white shadow-xl shadow-black/30 border border-gray-100 text-navy rounded-lg p-8 md:py-10',
+            'flex items-center justify-center',
+            index % 2 === 1 ? 'tilt-left' : 'tilt-right',
+          ]}
+        >
+          <div class="text-center flex flex-col">
+            <span class="text-5xl lg:text-6xl">{feature.icon}</span>
+            <h3 class="h4 mt-3 mb-4">{feature.title}</h3>
+            <p
+              class="md:text-lg text-pretty text-gray-500 [&_strong]:text-gray-700 [&_a]:underline [&_a]:text-gray-700 [&_a]:font-bold"
+              set:html={feature.text}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

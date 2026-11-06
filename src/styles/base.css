@@ -1,0 +1,17 @@
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  html {
+    @apply antialiased bg-white text-navy font-sans scroll-smooth;
+  }
+
+  body {
+    @apply overflow-x-clip;
+  }
+}

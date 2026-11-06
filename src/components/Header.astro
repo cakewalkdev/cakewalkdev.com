@@ -1,0 +1,30 @@
+---
+import Logo from '../icons/Logo.svg'
+import Wordmark from '../icons/Wordmark.svg'
+import { nav } from '../data/navigation.js'
+---
+
+<!-- One short nav that fits every screen, so there's no separate mobile menu -->
+<header transition:persist class="pt-8">
+  <div class="container-md flex items-center gap-x-3 justify-between">
+    <a href="/" class="flex items-center gap-2 shrink-0" aria-label="Cakewalk">
+      <div class="size-10 bg-green rounded-full flex items-center justify-center">
+        <Logo class="text-navy size-6" />
+      </div>
+      <Wordmark class="block text-navy h-4 w-auto" />
+    </a>
+    <nav class="flex items-center gap-4 sm:gap-8">
+      {nav.map((link, index) => (
+        index === nav.length - 1 ? (
+          <a class="button text-sm sm:text-base" href={link.route}>
+            <!-- Dropped on the narrowest phones so the button fits beside the logo -->
+            <span class="text-lg sm:text-2xl max-[359px]:hidden">👋</span>
+            {link.name}
+          </a>
+        ) : (
+          <a class="sm:text-lg underline font-semibold" href={link.route}>{link.name}</a>
+        )
+      ))}
+    </nav>
+  </div>
+</header>

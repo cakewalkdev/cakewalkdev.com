@@ -1,46 +1,30 @@
 {
   "name": "cakewalk",
   "version": "1.0.0",
-  "description": "The codebase for the website of cakewalk.",
-  "main": "index.js",
+  "description": "The codebase for the website of Cakewalk.",
   "type": "module",
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all clean -p build:*",
-    "build:11ty": "eleventy --quiet",
-    "build:vite": "vite build",
-    "clean": "rm -rf dist",
-    "dev": "NODE_ENV=development npm-run-all -p dev:*",
-    "dev:11ty": "eleventy --quiet --serve",
-    "dev:vite": "vite",
-    "format": "prettier ./src/**/*.{pcss,js} --write"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "htmlWhitespaceSensitivity": "ignore"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "keywords": [
     "tailwind",
-    "eleventy",
+    "astro",
     "alpine"
   ],
-  "author": "cakewalkdev",
+  "author": "Cakewalk",
+  "license": "MIT",
   "dependencies": {
-    "@alpinejs/collapse": "^3.14.9",
     "alpinejs": "^3.14.9",
     "aos": "^2.3.4"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0",
-    "@factorial/eleventy-plugin-twig": "^0.2.1",
+    "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/vite": "^4.1.4",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.4",
-    "twig": "^1.15.4",
-    "vite": "^7.2.6"
+    "@tailwindcss/vite": "^4.0.6",
+    "astro": "^7.0.4",
+    "tailwindcss": "4.3",
+    "vite": "^8.1.2"
   }
 }

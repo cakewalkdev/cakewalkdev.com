@@ -1,0 +1,16 @@
+@import 'aos/dist/aos.css';
+@import 'tailwindcss' source('..');
+@import './base.css';
+@import './utilities.css';
+@import './typography.css';
+
+@plugin '@tailwindcss/forms';
+
+@theme {
+  --font-sans: var(--font-nunito-sans);
+  --font-display: var(--font-anton);
+  --color-green: #52FFB8;
+  --color-navy: #232743;
+  --color-dark-navy: #191b30;
+  --color-black-navy: #0f101e;
+}

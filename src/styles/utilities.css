@@ -1,0 +1,81 @@
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@utility container-md {
+  @apply container lg:max-w-screen-lg;
+}
+
+@utility spacer {
+  @apply my-16 lg:my-20;
+}
+
+@utility spacer-py {
+  @apply py-16 lg:py-20;
+}
+
+@utility input {
+  @apply rounded bg-white text-navy shadow w-full;
+  @apply border-0 ring-1 ring-navy/10 focus:ring-navy/30;
+}
+
+/* Nunito Sans reads lighter than the old system font, so buttons go to extrabold to keep their weight */
+@utility button {
+  @apply font-extrabold rounded-full transition-colors;
+  @apply bg-navy hover:bg-green text-white hover:text-navy;
+  @apply inline-flex items-center gap-2 sm:gap-2.5 px-5 sm:px-8 py-2.5 sm:py-3;
+}
+
+@utility button-green {
+  @apply font-extrabold rounded-full transition-colors;
+  @apply bg-green text-navy hover:bg-white;
+  @apply inline-flex items-center gap-2 sm:gap-2.5 px-5 sm:px-8 py-2.5 sm:py-3;
+}
+
+/*
+ * Cards sit straight and tilt (with a small lift) when pointed at or tabbed to, easing in with a
+ * slight overshoot so they settle like a card being nudged. Alternate tilt-left and tilt-right
+ * across a row. Keep AOS off the same element: its transition rule would replace this one.
+ */
+@utility tilt {
+  transition-property: rotate, translate;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility tilt-left {
+  @apply tilt md:hover:-rotate-2 md:hover:-translate-y-1 md:focus-visible:-rotate-2 md:focus-visible:-translate-y-1;
+}
+
+@utility tilt-right {
+  @apply tilt md:hover:rotate-2 md:hover:-translate-y-1 md:focus-visible:rotate-2 md:focus-visible:-translate-y-1;
+}
+
+/*
+ * A custom AOS animation that writes an element in from left to right. A mask 2.5x the element's
+ * width, solid on its left 40% and clear past 60%, starts with only its clear end over the element
+ * and slides left until its solid part covers it, so a soft edge sweeps across like ink going down.
+ * AOS still supplies the delay, duration, and easing from the element's data-aos-* attributes.
+ */
+[data-aos='write'] {
+  mask-image: linear-gradient(to right, #000 40%, transparent 60%);
+  mask-size: 250% 100%;
+  mask-repeat: no-repeat;
+  mask-position: 100% 0;
+  transition-property: mask-position;
+}
+
+[data-aos='write'].aos-animate {
+  mask-position: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-aos='write'] {
+    mask-image: none;
+  }
+}

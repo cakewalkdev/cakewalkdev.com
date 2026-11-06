@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Curves from '../components/Curves.astro'
+import Hero from '../components/Hero.astro'
+import Features from '../components/Features.astro'
+import Testimonials from '../components/Testimonials.astro'
+import Work from '../components/Work.astro'
+import Tech from '../components/Tech.astro'
+import type { PageMeta } from '../layouts/Layout.astro'
+import { description, organizationRef } from '../data/schema'
+
+const meta: PageMeta = {
+  title: 'Cakewalk Development | We make web development simple.',
+  description,
+  // The home page describes the business and holds its contact form, so the Organization is its main entity.
+  schema: {
+    page: { about: organizationRef, mainEntity: organizationRef },
+  },
+}
+---
+
+<!-- Sections alternate light and dark. Each curve takes the background of the section above it
+     (bg-*, or the white page when unset) and is drawn in the color the section below starts with. -->
+<Layout meta={meta}>
+  <Hero />
+
+  <!-- What We Offer -->
+  <Curves class="w-full h-24 text-black-navy" />
+  <Features />
+
+  <!-- Who We Are -->
+  <Curves class="w-full h-24 bg-navy text-white" />
+  <Testimonials />
+
+  <!-- What We've Built -->
+  <Curves class="w-full h-24 bg-gray-100 text-black-navy" />
+  <Work />
+
+  <!-- Tech Talk -->
+  <Curves class="w-full h-24 bg-navy text-white" />
+  <Tech />
+
+  <!-- Into the contact form, which is the site footer -->
+  <Curves class="w-full h-24 bg-gray-100 text-black-navy" />
+</Layout>
