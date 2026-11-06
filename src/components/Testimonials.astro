@@ -1,0 +1,122 @@
+---
+import Em from './Em.astro'
+import LinkedIn from '../icons/LinkedIn.svg'
+
+const us = [
+  {
+    name: 'Matt',
+    url: 'https://mattwaler.com',
+    image: 'https://0.gravatar.com/avatar/78b1ddba0375ac08914ce5fec89b33d78901d8105554b4fbd7a66f9e8e9b6e9f?size=180',
+  },
+  {
+    name: 'Aaron',
+    url: 'https://aaronmbushnell.com/',
+    image: 'https://1.gravatar.com/avatar/25e592ada8d06f4018d32c81a8eb5fb3d5595344fe122a91564bebf867a630c1?size=180',
+  },
+]
+
+const testimonials = [
+  {
+    name: 'Kristina Orzech',
+    position: 'Digital Marketing Project Manager',
+    image: '/images/kristina-orzech.jpg',
+    url: 'https://www.linkedin.com/in/kristinaorzech/',
+    quote: 'Their willingness to jump into a project <strong>without hesitation, ask questions, and keep a positive outlook</strong> during the process is unmatchable when it comes to managing these sometimes complex digital projects.',
+  },
+  {
+    name: 'Ann Blessman',
+    position: 'Producer',
+    image: '/images/ann-blessman.jpg',
+    url: 'https://www.linkedin.com/in/ann-blessman/',
+    quote: 'Matt and Aaron are two of the most talented individuals I’ve ever had the pleasure of working with. Their <strong>patience, dependability, and strategic thinking</strong> made even the most technically complex projects an absolute breeze.',
+  },
+  {
+    name: 'Tori Ritter',
+    position: 'Senior Healthcare Marketing Specialist',
+    image: '/images/tori-ritter.jpg',
+    url: 'https://www.linkedin.com/in/tori-ritter-047370b1/',
+    quote: "They're an <strong>incredibly knowledgeable duo</strong> that doesn't hesitate to jump in head-first with a <strong>comprehensive approach</strong> and <strong>great energy</strong>. It's an absolute pleasure to work with these two!",
+  },
+  {
+    name: 'Mariam Aziz',
+    position: 'Senior Designer',
+    image: '/images/mariam-aziz.jpg',
+    url: 'https://www.linkedin.com/in/mariamdesignme/',
+    quote: 'Matt and Aaron always do a wonderful job bringing my websites to life. Their thought process is <strong>problem-solving and user experience first</strong>, which helps create dynamic products.',
+  },
+]
+---
+
+<section class="bg-linear-to-b from-white to-gray-100 spacer-py">
+  <div class="container">
+    <div class="flex items-center justify-center mb-10">
+      {us.map((person, index) => (
+        <a href={person.url} target="_blank" class="relative group">
+          <div
+            class:list={[
+              'absolute bg-green rounded-full px-3 py-2 font-bold text-sm text-navy',
+              index === 0 ? 'top-0 left-0 -translate-x-[90%]' : 'bottom-0 right-0 translate-x-[70%]',
+            ]}
+          >
+            {person.name}
+          </div>
+          <img
+            height="88"
+            width="88"
+            loading="lazy"
+            src={person.image}
+            alt=""
+            class:list={[
+              'transition-transform group-hover:-translate-y-2 border-4 border-white rounded-full size-24',
+              index !== 0 && '-translate-x-4',
+            ]}
+          >
+        </a>
+      ))}
+    </div>
+
+    <h2 class="h1 text-balance text-center">Who is Cakewalk?</h2>
+    <p class="h4 text-center mt-3">
+      Experts with <Em>30+ years</Em> of experience.
+    </p>
+
+    <div class="pt-12 lg:pt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        {testimonials.map((testimonial) => (
+          <div class="flex items-start gap-6">
+            <a href={testimonial.url} target="_blank" class="relative hover:-translate-y-2 transition-transform hidden sm:block">
+              <div class="absolute -bottom-1.5 -left-1.5 size-7 bg-gray-100 text-navy rounded-full flex flex-col justify-center items-center">
+                <LinkedIn class="size-3.5" />
+              </div>
+              <img
+                class="rounded-full"
+                alt={testimonial.name}
+                src={testimonial.image}
+                width="80"
+                height="80"
+                loading="lazy"
+              >
+            </a>
+            <div class="flex-1">
+              <p class="text-lg text-gray-600 [&_strong]:text-gray-800 [&_strong]:font-semibold" set:html={`“${testimonial.quote}”`} />
+              <div class="mt-5 lg:mt-3 flex items-center sm:flex-col sm:items-start gap-4">
+                <img
+                  class="rounded-full size-12 sm:hidden"
+                  alt={testimonial.name}
+                  src={testimonial.image}
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                >
+                <p class="flex flex-col gap-0.5">
+                  <span class="text-lg font-bold">{testimonial.name}</span>
+                  <span class="text-sm text-gray-500">{testimonial.position}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

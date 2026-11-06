@@ -1,0 +1,20 @@
+---
+// Curves land on fractional pixel rows, where their antialiased edge shows the white page behind as a
+// hairline. Overlapping each neighbor by 1px hides that edge, and turning the path inside the SVG
+// (rather than a CSS rotate) keeps the background edge from antialiasing too.
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<svg
+  preserveAspectRatio="none"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1000 100"
+  aria-hidden="true"
+  class:list={['-my-px', className]}
+>
+  <path transform="rotate(180 500 50)" d="M0 0v80l227.5 18c12.1 1 22.5-8.6 22.5-20.7s10.4-21.8 22.5-20.8l205 16.3c12.1 1 22.5-8.6 22.5-20.8s10.4-21.7 22.5-20.8l205 16.3c12.1 1 22.5-8.6 22.5-20.8S760.4 5 772.5 6L1000 24V0H0Z" fill="currentColor"></path>
+</svg>

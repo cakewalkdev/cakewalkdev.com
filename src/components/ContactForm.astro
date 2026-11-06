@@ -1,0 +1,59 @@
+---
+// Submissions go to Static Forms. The key is public by design, since it ships in the form's HTML.
+const apiKey = 'sf_5818938fac6b52664c7475f0'
+
+// Without JavaScript the browser posts straight to Static Forms, which sends the visitor back here
+// build.format 'file' makes the build-time pathname end in .html, which isn't the public URL
+const page = new URL(Astro.url.pathname.replace(/\.html$/, ''), Astro.site)
+const redirectTo = new URL(`?contact=true#contact`, page)
+---
+
+<!-- Sits on the navy contact section in the footer -->
+<div x-data="contactForm" class="max-w-screen-md mx-auto mt-12 text-white">
+  <div x-cloak x-show="status === 'sent'" role="status" class="text-center text-balance">
+    <p class="h3">Message received! 🎉</p>
+    <p class="mt-3 text-lg text-white/75">Thanks for reaching out. We'll be in touch as soon as we can.</p>
+  </div>
+  <form
+    x-show="status !== 'sent'"
+    x-on:submit.prevent="submit"
+    action="https://api.staticforms.dev/submit"
+    method="POST"
+    class="flex flex-col gap-8"
+    data-astro-reload
+  >
+    <input type="hidden" name="apiKey" value={apiKey}>
+    <input type="hidden" name="redirectTo" value={redirectTo.href}>
+    <input type="hidden" name="page" value={page.href}>
+    <!-- Bots fill every field; Static Forms drops any submission where this one has a value -->
+    <label class="sr-only" aria-hidden="true">
+      Leave this empty
+      <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+    </label>
+    <div class="flex flex-col gap-1">
+      <label class="block mb-1 font-medium" for="name">
+        Name <span class="text-green">*</span>
+      </label>
+      <input class="input" type="text" name="name" id="name" placeholder="Your name" autocomplete="name" required>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="block mb-1 font-medium" for="email">
+        Email <span class="text-green">*</span>
+      </label>
+      <input class="input" type="email" name="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="block mb-1 font-medium" for="message">
+        Message <span class="text-green">*</span>
+      </label>
+      <textarea class="input min-h-32" name="message" id="message" required></textarea>
+    </div>
+    <p x-cloak x-show="status === 'error'" x-text="error" role="alert" class="font-medium text-red-300"></p>
+    <div>
+      <button class="button-green text-sm sm:text-base disabled:opacity-60" type="submit" x-bind:disabled="status === 'sending'">
+        <span class="text-lg sm:text-2xl">👋</span>
+        <span x-text="status === 'sending' ? 'Sending…' : 'Get Started'">Get Started</span>
+      </button>
+    </div>
+  </form>
+</div>

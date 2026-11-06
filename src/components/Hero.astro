@@ -1,0 +1,55 @@
+---
+import Em from './Em.astro'
+
+const quotes = [
+  {
+    icon: '😥',
+    text: 'My plate is <strong>full</strong> and this website is just one more thing keeping me from my other responsibilities.',
+  },
+  {
+    icon: '😵‍💫',
+    text: "I just got an email about DNS/SSL/PHP something-or-other and I haven't the <strong>slightest</strong> what this means!",
+  },
+  {
+    icon: '😩',
+    text: "I thought my website would make my job easier, but it's just <strong>another thing</strong> for me to worry about.",
+  },
+]
+
+// The quotes, then the button, land one at a time after a short pause for the headline.
+// Every step is anchored to the quote list so they all trigger together and play as one sequence;
+// otherwise a button below the fold would wait for a scroll and then sit out its full delay.
+// AOS only supports delays and durations in 50ms steps up to 3000ms.
+const fadeDuration = 600
+const quoteDelay = (index: number) => 300 + index * 500
+const step = (index: number) => ({
+  'data-aos': 'fade-up',
+  'data-aos-anchor': '#hero-quotes',
+  'data-aos-delay': quoteDelay(index),
+  'data-aos-duration': fadeDuration,
+})
+---
+
+<section class="container-md text-navy spacer">
+  <h1 class="h1 text-balance">Your website doesn't have to be hard. Make it a <Em>cakewalk</Em>! 🍰</h1>
+  <p class="h4 mt-16 mb-6">Does this sound familiar?</p>
+  <div id="hero-quotes" class="flex flex-col gap-6 max-w-screen-md">
+    {quotes.map((quote, index) => (
+      <blockquote
+        {...step(index)}
+        class="flex items-center gap-6 text-lg md:text-2xl text-gray-600"
+      >
+        <div class="text-balance [&_strong]:text-navy">
+          <p set:html={quote.text} />
+        </div>
+        <cite class="not-italic text-3xl md:text-5xl order-first">{quote.icon}</cite>
+      </blockquote>
+    ))}
+  </div>
+  <div class="mt-12">
+    <a href="/#contact" class="button md:text-xl" {...step(quotes.length)}>
+      <span class="text-2xl">👋</span>
+      Yes, this is me. Please help.
+    </a>
+  </div>
+</section>

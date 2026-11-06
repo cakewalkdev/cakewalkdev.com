@@ -1,0 +1,146 @@
+---
+import { ClientRouter } from 'astro:transitions'
+import { Font } from 'astro:assets'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import Debug from '../components/Debug.astro'
+import '../styles/app.css'
+import {
+  SITE,
+  organization,
+  website,
+  websiteRef,
+  breadcrumbList,
+  type SchemaNode,
+  type Breadcrumb,
+} from '../data/schema'
+
+export interface PageSchema {
+  /** Schema.org type(s) for this page's WebPage node. Defaults to `WebPage`. */
+  type?: string | string[]
+  /** Extra properties merged into the WebPage node (e.g. `mainEntity`, `about`). */
+  page?: SchemaNode
+  /** Trail ending at the current page; `Home` is prepended automatically. */
+  breadcrumbs?: Breadcrumb[]
+  /** Additional nodes to include in the page's graph. Reference the page via `{ '@id': canonical }`. */
+  nodes?: SchemaNode[]
+}
+
+export interface PageMeta {
+  title: string
+  description?: string
+  /** 2400x1260 image path; defaults to `/images/og.png`. */
+  ogImage?: string
+  ogImageAlt?: string
+  schema?: PageSchema
+  /** Keep the page out of search results while still letting crawlers follow its links. */
+  noindex?: boolean
+}
+
+interface Props {
+  meta: PageMeta
+}
+
+const { title, description = '', ogImage, ogImageAlt, schema = {}, noindex = false } = Astro.props.meta
+
+// With `build.format: 'file'`, Astro.url.pathname is `/contact.html` at build time
+// but `/contact` in the browser — normalize to the URL the site actually serves.
+const canonical = new URL(
+  Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, ''),
+  Astro.site
+).href.replace(/(.)\/$/, '$1')
+
+const ogImageUrl = new URL(ogImage ?? '/images/og.png', Astro.site).href
+const ogImageAltText = ogImageAlt ?? (ogImage ? undefined : 'Cakewalk')
+
+const breadcrumbs = schema.breadcrumbs?.length
+  ? [{ name: 'Home', url: SITE }, ...schema.breadcrumbs]
+  : undefined
+
+const breadcrumbId = `${canonical}#breadcrumb`
+
+const webPage: SchemaNode = {
+  '@type': schema.type ?? 'WebPage',
+  '@id': canonical,
+  url: canonical,
+  name: title,
+  description,
+  inLanguage: 'en-US',
+  isPartOf: websiteRef,
+  primaryImageOfPage: { '@type': 'ImageObject', url: ogImageUrl, width: 2400, height: 1260 },
+  ...(breadcrumbs && { breadcrumb: { '@id': breadcrumbId } }),
+  ...schema.page,
+}
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organization,
+    website,
+    webPage,
+    ...(breadcrumbs ? [{ '@id': breadcrumbId, ...breadcrumbList(breadcrumbs) }] : []),
+    ...(schema.nodes ?? []),
+  ],
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <style is:global>
+      [x-cloak] { display: none!important; }
+    </style>
+    {noindex
+      ? <meta name="robots" content="noindex, follow">
+      : <meta name="robots" content="index, follow, noodp, max-image-preview:large, max-snippet:-1, max-video-preview:-1">}
+    <link rel="canonical" href={canonical}>
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicon-100x100.png">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:type" content="website">
+    <meta property="og:image" content={ogImageUrl}>
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="2400">
+    <meta property="og:image:height" content="1260">
+    {ogImageAltText && <meta property="og:image:alt" content={ogImageAltText}>}
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Cakewalk">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@cakewalkdev">
+    <meta name="twitter:site" content="@cakewalkdev">
+    <!-- Must run before ClientRouter checks whether view transitions are supported -->
+    <script is:inline>
+      // Safari repaints the white html background under its toolbars while a view transition
+      // runs, so it navigates with the router's plain DOM swap instead
+      if (navigator.vendor === 'Apple Computer, Inc.') document.startViewTransition = undefined
+    </script>
+    <ClientRouter fallback="swap" />
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <Font cssVariable="--font-anton" preload />
+    <Font cssVariable="--font-nunito-sans" preload />
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:bg-navy focus:text-white focus:font-semibold focus:rounded-full focus:px-4 focus:py-2 focus:shadow-lg"
+    >
+      Skip to content
+    </a>
+    <Debug />
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/app.js'
+    </script>
+  </body>
+</html>

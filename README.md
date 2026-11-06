@@ -1,15 +1,13 @@
-# 🫖 The TEA Stack
+# 🍰 Cakewalk
 
-Welcome to the most minimal stack out there. This stack makes static site generation a breeze.
+The website for [Cakewalk](https://cakewalkdev.com), built on Astro.
 
 ## 🧰 Tools
 
-This project uses the following frameworks:
-
+- [Astro](https://astro.build/)
 - [TailwindCSS](https://tailwindcss.com/)
-- [Eleventy](https://www.11ty.dev/)
 - [Alpine.js](https://alpinejs.dev/)
-- [Vite](https://vitejs.dev)
+- [AOS](https://michalsnik.github.io/aos/)
 
 ## ⭐️ Requirements
 
@@ -19,16 +17,11 @@ This project uses the following frameworks:
 ## 🛠 Getting Started
 
 - `nvm use` to switch to the valid node version
-- `npm i` to build that big ol' `node_modules` folder
+- `npm i` to install dependencies
 - `npm run dev` to boot up a live-reloading dev server
-- `npm run build` to build your production-ready site
+- `npm run build` to build your production-ready site into `dist`
+- `npm run preview` to serve that build locally
 
-Feel free to peep the `package.json` file to see all available scripts and packages being utilized.
+## ☁️ Hosting
 
-### 🔥 Tip:
-
-Running `npm run build && npx serve dist` will boot up a local server of your production site to preview before deployment.
-
-### 👋🏻 Thank you!
-
-I appreciate you taking time to check out the TEA stack, Please leave a star and share it if you found it useful!
+The site deploys to Cloudflare as static files. `public/_headers` sets long-lived caching on Astro's fingerprinted assets, and the contact form posts to [Static Forms](https://staticforms.dev).

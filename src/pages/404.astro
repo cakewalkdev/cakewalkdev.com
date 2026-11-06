@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Curves from '../components/Curves.astro'
+import Em from '../components/Em.astro'
+import type { PageMeta } from '../layouts/Layout.astro'
+
+const meta: PageMeta = {
+  title: 'Page not found | Cakewalk',
+  description: "This page doesn't exist, or it moved.",
+  noindex: true,
+}
+---
+
+<Layout meta={meta}>
+  <section class="container-md spacer">
+    <div class="max-w-screen-sm">
+      <h1 class="h1">Well, this page is <Em>not</Em> a cakewalk.</h1>
+      <p class="h4 mt-8 text-gray-600">It either doesn't exist or it moved somewhere else. Let's get you back on track.</p>
+    </div>
+    <div class="mt-12">
+      <a href="/" class="button md:text-xl">
+        <span class="text-2xl">🍰</span>
+        Back to the homepage
+      </a>
+    </div>
+  </section>
+
+  <!-- Into the contact form, which is the site footer -->
+  <Curves class="w-full h-24 text-black-navy" />
+</Layout>

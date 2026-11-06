@@ -1,0 +1,5 @@
+# Cloudflare defaults to 302 when no code is given, so each permanent move says 301
+/contact     /#contact  301
+/contact/    /#contact  301
+/agreement   /          301
+/agreement/  /          301

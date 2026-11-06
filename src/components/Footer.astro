@@ -1,0 +1,25 @@
+---
+import Curves from './Curves.astro'
+import Em from './Em.astro'
+import ContactForm from './ContactForm.astro'
+---
+
+<!-- Every page closes with the contact form, then the copyright on white to bookend the hero -->
+<footer>
+  <section id="contact" class="bg-linear-to-b from-black-navy to-navy spacer-py">
+    <div class="container">
+      <div class="text-center text-balance text-white">
+        <h2 class="h1">Ready to get started?</h2>
+        <p class="h4 mt-4 text-balance max-w-screen-md mx-auto">
+          Tell us about your next big thing and we can <Em>get things rolling.</Em>
+        </p>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+  <Curves class="w-full h-24 bg-navy text-white" />
+  <div class="container py-12 text-center">
+    <p class="font-bold text-xl">Cakewalk Development</p>
+    <p class="text-gray-500">&copy; {new Date().getFullYear()}. All rights reserved.</p>
+  </div>
+</footer>
