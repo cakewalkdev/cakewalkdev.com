@@ -51,7 +51,7 @@ const canonical = new URL(
 ).href.replace(/(.)\/$/, '$1')
 
 const ogImageUrl = new URL(ogImage ?? '/images/og.png', Astro.site).href
-const ogImageAltText = ogImageAlt ?? (ogImage ? undefined : 'Cakewalk')
+const ogImageAltText = ogImageAlt ?? (ogImage ? undefined : 'The Cakewalk logo, underlined in green, below a curved band on a navy gradient background.')
 
 const breadcrumbs = schema.breadcrumbs?.length
   ? [{ name: 'Home', url: SITE }, ...schema.breadcrumbs]
